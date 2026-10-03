@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Our Universe 🌌❤️ | Bitopan & Nisumii</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    body {
+      background-color: #050816;
+      color: #F8FAFC;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+    }
+    .font-serif {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+    .font-handwriting {
+      font-family: 'Caveat', cursive;
+    }
+
+    /* Screen Transitions */
+    .screen {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.1);
+    }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 8, 22, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .glass-card {
+      background: rgba(11, 16, 38, 0.95);
+      border: 1px solid rgba(244, 114, 182, 0.3);
+      border-radius: 1.25rem;
+      box-shadow: 0 0 50px rgba(124, 58, 237, 0.25);
+      position: relative;
+      overflow: hidden;
+      max-width: 38rem;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-overlay.active .glass-card {
+      transform: scale(1);
+    }
+
+    /* Top Bar */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4rem;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(5, 8, 22, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 50;
+    }
+    .brand {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      background: linear-gradient(to right, #FDE68A, #F472B6, #FFFFFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.05em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-btn:hover {
+      color: #FDE68A;
+    }
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .action-btn.active {
+      background: rgba(30, 27, 75, 0.8);
+      border-color: rgba(244, 114, 182, 0.5);
+      color: #FDE68A;
+      box-shadow: 0 0 15px rgba(244, 114, 182, 0.3);
+    }
+
+    /* Soundwave bars */
+    .bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+    }
+    .bar {
+      width: 2px;
+      background: #FDE68A;
+      border-radius: 1px;
+    }
+    .bar:nth-child(1) { height: 6px; animation: bounce 0.8s infinite; }
+    .bar:nth-child(2) { height: 12px; animation: bounce 0.6s infinite 0.2s; background: #F472B6; }
+    .bar:nth-child(3) { height: 8px; animation: bounce 0.7s infinite 0.4s; }
+    @keyframes bounce {
+      0%, 100% { transform: scaleY(0.4); }
+      50% { transform: scaleY(1); }
+    }
+
+    /* Enter Button */
+    .btn-enter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 2.25rem;
+      border-radius: 9999px;
+      background: linear-gradient(to right, rgba(124, 58, 237, 0.5), rgba(236, 72, 153, 0.6), rgba(124, 58, 237, 0.5));
+      border: 1px solid rgba(244, 114, 182, 0.6);
+      color: white;
+      font-size: 0.875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      box-shadow: 0 0 35px rgba(236, 72, 153, 0.35);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-enter:hover {
+      box-shadow: 0 0 50px rgba(253, 230, 138, 0.6);
+      transform: scale(1.05);
+      border-color: #FDE68A;
+    }
+
+    /* Floating Viewport Controls */
+    .viewport-controls {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 40;
+    }
+    .round-ctrl {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background: rgba(11, 16, 38, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+    }
+    .round-ctrl:hover {
+      border-color: #F472B6;
+      background: #1E1B4B;
+    }
+
+    /* Tooltip */
+    #tooltip {
+      position: fixed;
+      pointer-events: none;
+      z-index: 80;
+      transform: translate(-50%, -100%);
+      margin-top: -12px;
+      display: none;
+    }
+    #tooltip .inner {
+      background: rgba(11, 16, 38, 0.92);
+      border: 1px solid rgba(244, 114, 182, 0.4);
+      padding: 0.4rem 0.9rem;
+      border-radius: 9999px;
+      box-shadow: 0 0 20px rgba(244, 114, 182, 0.3);
+      text-align: center;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. OPENING SCREEN -->
+  <div id="openingScreen" class="screen" style="display: flex; align-items: center; justify-content: center; z-index: 20;">
+    <canvas id="openingCanvas" style="position: absolute; inset: 0; width: 100%; height: 100%;"></canvas>
+    
+    <div style="position: relative; z-index: 10; max-width: 50rem; padding: 2rem; text-align: center;">
+      <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; padding: 0.35rem 1rem; border-radius: 9999px; border: 1px solid rgba(244, 114, 182, 0.25); background: rgba(11, 16, 38, 0.6); backdrop-filter: blur(10px);">
+        <span style="width: 6px; height: 6px; border-radius: 50%; background: #FDE68A;"></span>
+        <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.25em; color: rgba(253, 230, 138, 0.9);">A Journey Through Starlight</span>
+        <span style="width: 6px; height: 6px; border-radius: 50%; background: #FDE68A;"></span>
+      </div>
+
+      <h1 class="font-serif" style="font-size: clamp(2rem, 5vw, 4rem); font-weight: 300; line-height: 1.2; text-shadow: 0 0 30px rgba(255,255,255,0.3);">
+        Somewhere in this enormous universe...
+      </h1>
+
+      <p class="font-serif" style="font-size: clamp(1.5rem, 4vw, 3rem); font-style: italic; margin-top: 1rem; background: linear-gradient(to right, #FDE68A, #F472B6, #E0E7FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        I found my favorite person. ❤️
+      </p>
+
+      <p style="margin-top: 1.5rem; font-size: 0.85rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(248, 250, 252, 0.75);">
+        Bitopan <span style="color: #F472B6;">✦</span> Nisumii😚
+      </p>
+
+      <div style="margin-top: 2.5rem;">
+        <button id="btnEnterUniverse" class="btn-enter">
+          ENTER OUR UNIVERSE ✨
+        </button>
+        <p style="margin-top: 1rem; font-size: 0.75rem; color: rgba(255, 255, 255, 0.4);">
+          Put on headphones for the full celestial experience 🎧
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MAIN GALAXY SCREEN -->
+  <div id="galaxyScreen" class="screen hidden">
+    <!-- Top Navigation Bar -->
+    <header>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span class="brand">Our Universe</span>
+        <span style="font-size: 0.85rem; color: #F472B6;">❤️</span>
+      </div>
+
+      <nav class="nav-links">
+        <button id="navMoonLetter" class="nav-btn">Moon Letter 💌</button>
+        <button id="navConstellation" class="nav-btn">Heart Constellation ✨</button>
+        <button id="navCustomPhotos" class="nav-btn">Memories 📷</button>
+      </nav>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div style="display: flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem; color: rgba(255,255,255,0.8);">
+          <span>⭐</span>
+          <span id="memCounter">0/6</span>
+        </div>
+
+        <button id="btnAudioToggle" class="action-btn active" title="Toggle Celestial Music">
+          <div class="bars">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+          <span id="audioLabel">Music On</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Interactive Galaxy Canvas -->
+    <canvas id="galaxyCanvas" style="position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab;"></canvas>
+
+    <!-- Viewport Navigation Controls -->
+    <div class="viewport-controls">
+      <button id="btnZoomIn" class="round-ctrl" title="Zoom In">+</button>
+      <button id="btnZoomOut" class="round-ctrl" title="Zoom Out">−</button>
+      <button id="btnCenterCam" class="round-ctrl" title="Center Galaxy">🎯</button>
+    </div>
+
+    <!-- Floating Tooltip -->
+    <div id="tooltip">
+      <div class="inner">
+        <p id="tooltipTitle" style="font-size: 0.75rem; font-weight: 600; color: white;"></p>
+        <p id="tooltipSub" class="font-serif" style="font-size: 0.65rem; font-style: italic; color: #FDE68A; margin-top: 2px;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. MEMORY MODAL -->
+  <div id="memoryModal" class="modal-overlay">
+    <div class="glass-card" style="padding: 1.5rem 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+            <span id="modalPlanetDot" style="width: 8px; height: 8px; border-radius: 50%;"></span>
+            <span id="modalCategory" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: #FDE68A; font-weight: 600;"></span>
+            <span style="color: rgba(255,255,255,0.3); font-size: 0.75rem;">·</span>
+            <span id="modalDate" style="font-size: 0.75rem; color: rgba(255,255,255,0.5);"></span>
+          </div>
+          <h2 id="modalTitle" class="font-serif" style="font-size: 1.75rem; font-weight: 400; color: #F8FAFC;"></h2>
+        </div>
+        <button id="closeMemoryModal" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); width: 2rem; height: 2rem; border-radius: 50%; color: white; cursor: pointer; font-size: 0.9rem;">✕</button>
+      </div>
+
+      <!-- Memory Visual Frame -->
+      <div style="position: relative; border-radius: 0.75rem; overflow: hidden; border: 1px solid rgba(244, 114, 182, 0.25); background: #050816; min-height: 14rem; display: flex; align-items: center; justify-content: center;">
+        <img id="modalPhoto" src="" alt="Memory" style="width: 100%; height: 16rem; object-fit: cover; display: block;">
+        <div id="modalPhotoFallback" style="display: none; padding: 2rem; text-align: center;">
+          <span style="font-size: 3rem;">🌌</span>
+          <p id="modalFallbackTitle" class="font-serif" style="color: #FDE68A; font-size: 1.25rem; margin-top: 0.5rem;"></p>
+        </div>
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 0.75rem 1rem; background: linear-gradient(to top, rgba(11,16,38,0.9), transparent); display: flex; justify-content: space-between; align-items: center;">
+          <span id="modalCaption" class="font-serif" style="font-style: italic; font-size: 0.85rem; color: rgba(255,255,255,0.85);"></span>
+          <button id="btnUploadModalPhoto" style="padding: 0.25rem 0.6rem; border-radius: 4px; background: rgba(11, 16, 38, 0.8); border: 1px solid rgba(255,255,255,0.2); color: #FDE68A; font-size: 0.65rem; cursor: pointer;">
+            📷 Swap Photo
+          </button>
+          <input type="file" id="modalFileInput" accept="image/*" style="display: none;">
+        </div>
+      </div>
+
+      <p id="modalDesc" class="font-serif" style="font-size: 1.1rem; line-height: 1.6; font-style: italic; color: rgba(255,255,255,0.9); margin-top: 1rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.05);"></p>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem;">
+        <button id="btnPrevMemory" style="background: none; border: none; color: white; cursor: pointer;">← Previous Memory</button>
+        <span id="modalIndex" style="font-family: monospace; color: #FDE68A;">1 / 6</span>
+        <button id="btnNextMemory" style="background: none; border: none; color: white; cursor: pointer;">Next Memory →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. MOON LETTER MODAL -->
+  <div id="moonModal" class="modal-overlay">
+    <div class="glass-card" style="padding: 2.5rem; border-color: rgba(253, 230, 138, 0.4); max-width: 34rem;">
+      <button id="closeMoonModal" style="position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); width: 2rem; height: 2rem; border-radius: 50%; color: white; cursor: pointer;">✕</button>
+
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="width: 3.2rem; height: 3.2rem; border-radius: 50%; background: linear-gradient(45deg, #B91C1C, #F87171); border: 1px solid rgba(253,230,138,0.5); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-size: 1.5rem; box-shadow: 0 0 20px rgba(220,38,38,0.4);">
+          🌙
+        </div>
+        <p style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.25em; color: rgba(253, 230, 138, 0.8);">Written in the Moonlight</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <h2 class="font-serif" style="font-size: 1.8rem; font-style: italic; color: #FDE68A;">
+          Hey, Nisumii😚. ❤️
+        </h2>
+        <p class="font-serif" style="font-size: 1.25rem; font-weight: 300; line-height: 1.6; color: rgba(248, 250, 252, 0.95);">
+          Out of all the stars in the universe, you are the one I keep coming back to.
+        </p>
+        <p class="font-serif" style="font-size: 1.25rem; font-weight: 300; line-height: 1.6; color: rgba(248, 250, 252, 0.95);">
+          I made this little universe just for you, filled with tiny pieces of what you mean to me.
+        </p>
+        <p class="font-serif" style="font-size: 1.25rem; font-weight: 300; line-height: 1.6; color: rgba(248, 250, 252, 0.95);">
+          No matter how big the universe gets, I hope you always remember that you have a special place in mine.
+        </p>
+        <div style="text-align: right; margin-top: 1rem;">
+          <p class="font-serif" style="font-style: italic; font-size: 1.1rem; color: #FDE68A;">With all my love,</p>
+          <p class="font-serif" style="font-size: 1.8rem; color: white; margin-top: 0.25rem;">Bitopan ❤️</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. HIDDEN NOTE MODAL -->
+  <div id="hiddenNoteModal" class="modal-overlay">
+    <div class="glass-card" style="padding: 2rem; max-width: 26rem; text-align: center; border-color: rgba(253, 230, 138, 0.4);">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">✨</div>
+      <p style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.25em; color: rgba(253, 230, 138, 0.8);">A Secret Starlight Whisper</p>
+      <p id="hiddenNoteText" class="font-serif" style="font-size: 1.5rem; font-style: italic; color: #F8FAFC; margin: 1.5rem 0; line-height: 1.5;"></p>
+      <p style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">From Bitopan with love ❤️</p>
+      <button id="closeHiddenNoteModal" style="margin-top: 1.5rem; padding: 0.5rem 1.5rem; border-radius: 9999px; background: #1E1B4B; border: 1px solid rgba(244,114,182,0.4); color: white; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer;">
+        Keep Exploring
+      </button>
+    </div>
+  </div>
+
+  <!-- 6. FINAL SURPRISE MODAL -->
+  <div id="surpriseModal" class="modal-overlay">
+    <div class="glass-card" style="padding: 2.5rem; max-width: 32rem; text-align: center; border-color: rgba(253, 230, 138, 0.5);">
+      <div style="width: 10rem; height: 10rem; border-radius: 50%; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #7C3AED, #EC4899, #FDE68A); padding: 4px; box-shadow: 0 0 50px rgba(244,114,182,0.5);">
+        <div style="width: 100%; height: 100%; border-radius: 50%; background: #050816; display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+          💖
+        </div>
+      </div>
+      <h2 class="font-serif" style="font-size: 1.8rem; font-weight: 300; color: #F8FAFC;">
+        "And if I had a thousand universes to choose from..."
+      </h2>
+      <p id="surprisePart2" class="font-serif" style="font-size: 2.2rem; font-style: italic; margin-top: 0.75rem; background: linear-gradient(to right, #FDE68A, #F472B6, #FFFFFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; transition: opacity 1.5s ease;">
+        "I'd still choose you. ❤️"
+      </p>
+      <p style="margin-top: 1rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.25em; color: rgba(253, 230, 138, 0.9);">
+        Bitopan & Nisumii · Forever
+      </p>
+      <button id="btnStayInUniverse" class="btn-enter" style="margin-top: 2rem; padding: 0.8rem 2rem; font-size: 0.8rem;">
+        STAY IN OUR UNIVERSE ✨
+      </button>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * CONFIGURATION
+     */
+    const CONFIG = {
+      yourName: "Bitopan",
+      herName: "Nisumii😚",
+      tagline: "Our own little universe.",
+      memories: [
+        {
+          id: "mem-1",
+          category: "Our Beginning",
+          title: "The First Day in Class",
+          date: "Day One",
+          desc: "You know I was the first to talk with you from our class when it was your first day. From that very first conversation, you brought a warmth that completely changed my world.",
+          caption: "The start of something unforgettable ✨",
+          color: "#F59E0B",
+          orbitRadius: 180,
+          orbitSpeed: 0.0007,
+          size: 14,
+          hasRings: true
+        },
+        {
+          id: "mem-2",
+          category: "My Favorite Memory",
+          title: "Looking at You from Behind",
+          date: "Every Sweet Afternoon",
+          desc: "You know I was looking at you all day when I sat behind you at class. Every time you turned or smiled, time seemed to stand completely still.",
+          caption: "You were the only view that mattered 🌸",
+          color: "#EC4899",
+          orbitRadius: 260,
+          orbitSpeed: 0.0005,
+          size: 16,
+          hasRings: false
+        },
+        {
+          id: "mem-3",
+          category: "The Best Day",
+          title: "Township Function Magic",
+          date: "Our Unforgettable Day",
+          desc: "The day we met at the function in township was honestly my best day. Seeing you there, laughing together amidst the crowd and lights, made me realize just how deeply I cherish you.",
+          caption: "My happiest memory under the evening lights 🏮",
+          color: "#8B5CF6",
+          orbitRadius: 340,
+          orbitSpeed: 0.00035,
+          size: 18,
+          hasRings: true
+        },
+        {
+          id: "mem-4",
+          category: "Why I Love You",
+          title: "Your Smile & Your Heart",
+          date: "Always & Forever",
+          desc: "I love the way your eyes crinkle when you laugh, how you make ordinary moments feel like pure starlight, and the quiet comfort you bring just by being in my life.",
+          caption: "Pure, radiant, and true 💫",
+          color: "#06B6D4",
+          orbitRadius: 420,
+          orbitSpeed: 0.00028,
+          size: 15,
+          hasRings: false
+        },
+        {
+          id: "mem-5",
+          category: "Our Future",
+          title: "A Thousand New Tomorrows",
+          date: "The Journey Ahead",
+          desc: "No matter where life takes us or what challenges arise, my dream is simple: to hold your hand, explore the world together, and keep creating memories under every sky.",
+          caption: "Written in the constellations 🌌",
+          color: "#10B981",
+          orbitRadius: 490,
+          orbitSpeed: 0.00022,
+          size: 17,
+          hasRings: true
+        },
+        {
+          id: "mem-6",
+          category: "A Little Secret",
+          title: "The Quiet Truth",
+          date: "Every Single Day",
+          desc: "Even when I don't say it out loud, you are the very first thought in my mind when I wake up and the calmest peace before I fall asleep. You are my safe haven.",
+          caption: "A whisper between the stars 🌙",
+          color: "#F43F5E",
+          orbitRadius: 560,
+          orbitSpeed: 0.00018,
+          size: 13,
+          hasRings: false
+        }
+      ],
+      hiddenNotes: [
+        { id: "note-1", msg: "You make ordinary days feel so special.", xr: 0.35, yr: -0.42 },
+        { id: "note-2", msg: "My favorite notification is always yours. 💌", xr: -0.45, yr: 0.38 },
+        { id: "note-3", msg: "If I could choose again, I'd still want to meet you every time.", xr: 0.52, yr: 0.28 },
+        { id: "note-4", msg: "You are my favorite part of this universe. ✨", xr: -0.28, yr: -0.52 },
+        { id: "note-5", msg: "Every smile of yours adds another star to my sky.", xr: 0.12, yr: 0.58 }
+      ]
+    };
+
+    /**
+     * WEB AUDIO SYNTHESIZER
+     */
+    class AudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.playing = false;
+        this.muted = false;
+        this.gain = null;
+        this.chords = [
+          [138.59, 277.18, 349.23, 415.30, 523.25], // Db maj7
+          [103.83, 207.65, 261.63, 311.13, 392.00], // Ab
+          [87.31, 174.61, 207.65, 261.63, 311.13],  // Fm7
+          [92.50, 185.00, 233.08, 277.18, 349.23, 415.30] // Gb maj9
+        ];
+        this.idx = 0;
+        this.timer = null;
+      }
+      init() {
+        if (!this.ctx) {
+          const Cls = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new Cls();
+          this.gain = this.ctx.createGain();
+          this.gain.gain.setValueAtTime(0.6, this.ctx.currentTime);
+          this.gain.connect(this.ctx.destination);
+        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+      }
+      start() {
+        this.init();
+        this.playing = true;
+        this.muted = false;
+        if (!this.timer) {
+          this.playChord();
+          this.timer = setInterval(() => this.playChord(), 4500);
+        }
+      }
+      toggleMute() {
+        this.muted = !this.muted;
+        if (this.gain && this.ctx) {
+          this.gain.gain.setTargetAtTime(this.muted ? 0 : 0.6, this.ctx.currentTime, 0.1);
+        }
+        return !this.muted;
+      }
+      playChord() {
+        if (!this.playing || this.muted || !this.ctx || !this.gain) return;
+        const notes = this.chords[this.idx % this.chords.length];
+        this.idx++;
+        const now = this.ctx.currentTime;
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1400, now);
+        filter.connect(this.gain);
+
+        notes.forEach((freq, i) => {
+          const t = now + i * 0.08;
+          const osc = this.ctx.createOscillator();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, t);
+
+          const g = this.ctx.createGain();
+          const vel = 0.06 / (1 + i * 0.2);
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.exponentialRampToValueAtTime(vel, t + 0.1);
+          g.gain.exponentialRampToValueAtTime(0.00001, t + 4.2);
+
+          osc.connect(g);
+          g.connect(filter);
+          osc.start(t);
+          osc.stop(t + 4.5);
+        });
+      }
+      playTwinkle() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx || !this.gain) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, now);
+        osc.frequency.exponentialRampToValueAtTime(1320, now + 0.3);
+        const g = this.ctx.createGain();
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.exponentialRampToValueAtTime(0.08, now + 0.03);
+        g.gain.exponentialRampToValueAtTime(0.00001, now + 0.6);
+        osc.connect(g);
+        g.connect(this.gain);
+        osc.start(now);
+        osc.stop(now + 0.7);
+      }
+      playWarp() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx || !this.gain) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(90, now);
+        osc.frequency.exponentialRampToValueAtTime(360, now + 1.2);
+        const g = this.ctx.createGain();
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.exponentialRampToValueAtTime(0.12, now + 0.5);
+        g.gain.exponentialRampToValueAtTime(0.00001, now + 2.0);
+        osc.connect(g);
+        g.connect(this.gain);
+        osc.start(now);
+        osc.stop(now + 2.1);
+      }
+    }
+    const audio = new AudioEngine();
+
+    /**
+     * OPENING CANVAS
+     */
+    const opCanvas = document.getElementById('openingCanvas');
+    const opCtx = opCanvas.getContext('2d');
+    let opStars = [];
+    function resizeOp() {
+      opCanvas.width = window.innerWidth;
+      opCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeOp);
+    resizeOp();
+
+    for (let i = 0; i < 350; i++) {
+      opStars.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        s: Math.random() * 1.8 + 0.4,
+        a: Math.random() * 0.7 + 0.3,
+        spd: Math.random() * 0.04 + 0.01,
+        p: Math.random() * Math.PI * 2
+      });
+    }
+
+    let opTime = 0;
+    function animOp() {
+      if (document.getElementById('openingScreen').classList.contains('hidden')) return;
+      opTime += 0.016;
+      opCtx.clearRect(0, 0, opCanvas.width, opCanvas.height);
+
+      // Deep space gradient
+      const bg = opCtx.createRadialGradient(opCanvas.width/2, opCanvas.height/2, 50, opCanvas.width/2, opCanvas.height/2, opCanvas.width*0.8);
+      bg.addColorStop(0, '#0c122c');
+      bg.addColorStop(1, '#050816');
+      opCtx.fillStyle = bg;
+      opCtx.fillRect(0, 0, opCanvas.width, opCanvas.height);
+
+      // Stars
+      for (const s of opStars) {
+        const twinkle = Math.sin(opTime * s.spd * 60 + s.p);
+        opCtx.fillStyle = '#FFFFFF';
+        opCtx.globalAlpha = Math.max(0.1, s.a + twinkle * 0.3);
+        opCtx.beginPath();
+        opCtx.arc(s.x, s.y, s.s, 0, Math.PI * 2);
+        opCtx.fill();
+      }
+      opCtx.globalAlpha = 1;
+      requestAnimationFrame(animOp);
+    }
+    animOp();
+
+    // Enter Universe Click
+    document.getElementById('btnEnterUniverse').addEventListener('click', () => {
+      audio.playWarp();
+      audio.start();
+      const op = document.getElementById('openingScreen');
+      const gx = document.getElementById('galaxyScreen');
+      op.classList.add('hidden');
+      setTimeout(() => {
+        op.style.display = 'none';
+        gx.classList.remove('hidden');
+        resizeGalaxy();
+      }, 900);
+    });
+
+    /**
+     * GALAXY ENGINE
+     */
+    const gxCanvas = document.getElementById('galaxyCanvas');
+    const gxCtx = gxCanvas.getContext('2d');
+    let cam = { x: 0, y: 0, tx: 0, ty: 0, z: 1, tz: 1, drag: false, sx: 0, sy: 0, csx: 0, csy: 0 };
+    let gxStars = [];
+    let heartCenter = { x: 340, y: -200 };
+    let heartPts = [];
+    let visitedMemories = new Set();
+    let isConstellationGlowing = false;
+
+    function resizeGalaxy() {
+      gxCanvas.width = window.innerWidth * window.devicePixelRatio;
+      gxCanvas.height = window.innerHeight * window.devicePixelRatio;
+      gxCanvas.style.width = window.innerWidth + 'px';
+      gxCanvas.style.height = window.innerHeight + 'px';
+    }
+    window.addEventListener('resize', resizeGalaxy);
+    resizeGalaxy();
+
+    // Generate Galaxy Stars
+    for (let i = 0; i < 1100; i++) {
+      const ang = Math.random() * Math.PI * 2;
+      const rad = 40 + Math.pow(Math.random(), 0.7) * 2000;
+      gxStars.push({
+        x: Math.cos(ang) * rad,
+        y: Math.sin(ang) * rad,
+        size: Math.random() * 1.8 + 0.4,
+        alpha: Math.random() * 0.7 + 0.3,
+        spd: Math.random() * 0.04 + 0.015,
+        p: Math.random() * Math.PI * 2
+      });
+    }
+
+    // Heart constellation points
+    for (let i = 0; i < 16; i++) {
+      const t = (i / 16) * Math.PI * 2;
+      const hx = 16 * Math.pow(Math.sin(t), 3);
+      const hy = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+      heartPts.push({ x: heartCenter.x + hx * 5.5, y: heartCenter.y + hy * 5.5 });
+    }
+
+    let gTime = 0;
+    function renderGalaxy() {
+      gTime += 0.016;
+      cam.x += (cam.tx - cam.x) * 0.08;
+      cam.y += (cam.ty - cam.y) * 0.08;
+      cam.z += (cam.tz - cam.z) * 0.08;
+
+      const dpr = window.devicePixelRatio || 1;
+      const w = gxCanvas.width;
+      const h = gxCanvas.height;
+
+      gxCtx.save();
+      gxCtx.clearRect(0, 0, w, h);
+      gxCtx.fillStyle = '#050816';
+      gxCtx.fillRect(0, 0, w, h);
+
+      gxCtx.translate(w / 2, h / 2);
+      gxCtx.scale(cam.z * dpr, cam.z * dpr);
+      gxCtx.translate(-cam.x, -cam.y);
+
+      // Nebulas
+      gxCtx.save();
+      gxCtx.globalCompositeOperation = 'screen';
+      [
+        { x: -180, y: -120, r: 600, c: 'rgba(124, 58, 237, 0.18)' },
+        { x: 220, y: 140, r: 680, c: 'rgba(236, 72, 153, 0.15)' },
+        { x: 320, y: -220, r: 550, c: 'rgba(244, 114, 182, 0.15)' }
+      ].forEach(n => {
+        const g = gxCtx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
+        g.addColorStop(0, n.c);
+        g.addColorStop(1, 'transparent');
+        gxCtx.fillStyle = g;
+        gxCtx.beginPath();
+        gxCtx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        gxCtx.fill();
+      });
+      gxCtx.restore();
+
+      // Stars
+      for (const s of gxStars) {
+        const tw = Math.sin(gTime * s.spd * 60 + s.p);
+        gxCtx.fillStyle = '#FFFFFF';
+        gxCtx.globalAlpha = Math.max(0.1, s.alpha + tw * 0.35);
+        gxCtx.beginPath();
+        gxCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        gxCtx.fill();
+      }
+      gxCtx.globalAlpha = 1;
+
+      // Central Core
+      const core = gxCtx.createRadialGradient(0, 0, 0, 0, 0, 90);
+      core.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+      core.addColorStop(0.3, 'rgba(253, 230, 138, 0.7)');
+      core.addColorStop(0.7, 'rgba(244, 114, 182, 0.25)');
+      core.addColorStop(1, 'transparent');
+      gxCtx.fillStyle = core;
+      gxCtx.beginPath();
+      gxCtx.arc(0, 0, 90, 0, Math.PI * 2);
+      gxCtx.fill();
+
+      // Couple Center Text
+      gxCtx.textAlign = 'center';
+      gxCtx.font = '600 15px "Plus Jakarta Sans", sans-serif';
+      gxCtx.fillStyle = '#FFFFFF';
+      gxCtx.fillText(`${CONFIG.yourName} ❤️ ${CONFIG.herName}`, 0, -8);
+      gxCtx.font = 'italic 12px "Cormorant Garamond", serif';
+      gxCtx.fillStyle = 'rgba(253, 230, 138, 0.9)';
+      gxCtx.fillText(CONFIG.tagline, 0, 14);
+
+      // Heart Constellation
+      const hPulse = isConstellationGlowing ? 1 + Math.sin(gTime * 3) * 0.15 : 1 + Math.sin(gTime * 1.2) * 0.05;
+      gxCtx.strokeStyle = isConstellationGlowing ? 'rgba(244, 114, 182, 0.85)' : 'rgba(244, 114, 182, 0.35)';
+      gxCtx.lineWidth = isConstellationGlowing ? 2.5 : 1.2;
+      gxCtx.beginPath();
+      for (let i = 0; i <= heartPts.length; i++) {
+        const pt = heartPts[i % heartPts.length];
+        const px = heartCenter.x + (pt.x - heartCenter.x) * hPulse;
+        const py = heartCenter.y + (pt.y - heartCenter.y) * hPulse;
+        if (i === 0) gxCtx.moveTo(px, py);
+        else gxCtx.lineTo(px, py);
+      }
+      gxCtx.stroke();
+      heartPts.forEach(pt => {
+        const px = heartCenter.x + (pt.x - heartCenter.x) * hPulse;
+        const py = heartCenter.y + (pt.y - heartCenter.y) * hPulse;
+        gxCtx.fillStyle = isConstellationGlowing ? '#FDE68A' : '#FFFFFF';
+        gxCtx.beginPath();
+        gxCtx.arc(px, py, isConstellationGlowing ? 4 : 3, 0, Math.PI * 2);
+        gxCtx.fill();
+      });
+
+      // Orbiting Memory Planets
+      CONFIG.memories.forEach(mem => {
+        // Orbit ring
+        gxCtx.strokeStyle = 'rgba(255,255,255,0.08)';
+        gxCtx.lineWidth = 1;
+        gxCtx.beginPath();
+        gxCtx.arc(0, 0, mem.orbitRadius, 0, Math.PI * 2);
+        gxCtx.stroke();
+
+        const ang = gTime * mem.orbitSpeed * 30 + (mem.orbitRadius * 0.1);
+        const px = Math.cos(ang) * mem.orbitRadius;
+        const py = Math.sin(ang) * mem.orbitRadius;
+
+        // 3D Planet Sphere
+        const sp = gxCtx.createRadialGradient(px - mem.size*0.3, py - mem.size*0.3, 2, px, py, mem.size);
+        sp.addColorStop(0, '#FFFFFF');
+        sp.addColorStop(0.4, mem.color);
+        sp.addColorStop(1, '#050816');
+        gxCtx.fillStyle = sp;
+        gxCtx.beginPath();
+        gxCtx.arc(px, py, mem.size, 0, Math.PI * 2);
+        gxCtx.fill();
+
+        // Label
+        gxCtx.font = '500 11px "Plus Jakarta Sans", sans-serif';
+        gxCtx.fillStyle = '#F8FAFC';
+        gxCtx.fillText(mem.category, px, py + mem.size + 15);
+      });
+
+      // The Moon
+      const mx = -400, my = -240;
+      const moonGrad = gxCtx.createRadialGradient(mx - 6, my - 6, 2, mx, my, 25);
+      moonGrad.addColorStop(0, '#FFFBEB');
+      moonGrad.addColorStop(0.6, '#FDE68A');
+      moonGrad.addColorStop(1, '#1E1B4B');
+      gxCtx.fillStyle = moonGrad;
+      gxCtx.beginPath();
+      gxCtx.arc(mx, my, 25, 0, Math.PI * 2);
+      gxCtx.fill();
+      gxCtx.font = '600 12px "Plus Jakarta Sans", sans-serif';
+      gxCtx.fillStyle = '#FDE68A';
+      gxCtx.fillText("Nisumii's Letter 💌", mx, my + 40);
+
+      // Hidden Notes
+      CONFIG.hiddenNotes.forEach(hn => {
+        const nx = hn.xr * 700, ny = hn.yr * 500;
+        gxCtx.fillStyle = '#FFFFFF';
+        gxCtx.beginPath();
+        gxCtx.arc(nx, ny, 3.2, 0, Math.PI * 2);
+        gxCtx.fill();
+      });
+
+      gxCtx.restore();
+      requestAnimationFrame(renderGalaxy);
+    }
+    renderGalaxy();
+
+    // Mouse & Touch Controls
+    gxCanvas.addEventListener('mousedown', (e) => {
+      cam.drag = true;
+      cam.sx = e.clientX;
+      cam.sy = e.clientY;
+      cam.csx = cam.tx;
+      cam.csy = cam.ty;
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (cam.drag) {
+        cam.tx = cam.csx - (e.clientX - cam.sx) / cam.z;
+        cam.ty = cam.csy - (e.clientY - cam.sy) / cam.z;
+      }
+    });
+    window.addEventListener('mouseup', (e) => {
+      if (cam.drag) {
+        const moved = Math.hypot(e.clientX - cam.sx, e.clientY - cam.sy);
+        cam.drag = false;
+        if (moved < 6) checkHit(e.clientX, e.clientY);
+      }
+    });
+    gxCanvas.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      cam.tz = Math.min(Math.max(cam.tz * (e.deltaY < 0 ? 1.15 : 0.88), 0.45), 2.8);
+    });
+
+    // Touch support
+    gxCanvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        cam.drag = true;
+        cam.sx = e.touches[0].clientX;
+        cam.sy = e.touches[0].clientY;
+        cam.csx = cam.tx;
+        cam.csy = cam.ty;
+      }
+    });
+    gxCanvas.addEventListener('touchmove', (e) => {
+      if (cam.drag && e.touches.length === 1) {
+        cam.tx = cam.csx - (e.touches[0].clientX - cam.sx) / cam.z;
+        cam.ty = cam.csy - (e.touches[0].clientY - cam.sy) / cam.z;
+      }
+    });
+    gxCanvas.addEventListener('touchend', (e) => {
+      if (cam.drag) {
+        const touch = e.changedTouches[0];
+        const moved = Math.hypot(touch.clientX - cam.sx, touch.clientY - cam.sy);
+        cam.drag = false;
+        if (moved < 8) checkHit(touch.clientX, touch.clientY);
+      }
+    });
+
+    // Hit Testing
+    function checkHit(cx, cy) {
+      const gx = (cx - window.innerWidth / 2) / cam.z + cam.x;
+      const gy = (cy - window.innerHeight / 2) / cam.z + cam.y;
+
+      // Check Moon
+      if (Math.hypot(gx - (-400), gy - (-240)) < 35) {
+        audio.playTwinkle();
+        openMoonModal();
+        return;
+      }
+
+      // Check Planets
+      for (let i = 0; i < CONFIG.memories.length; i++) {
+        const mem = CONFIG.memories[i];
+        const ang = gTime * mem.orbitSpeed * 30 + (mem.orbitRadius * 0.1);
+        const px = Math.cos(ang) * mem.orbitRadius;
+        const py = Math.sin(ang) * mem.orbitRadius;
+        if (Math.hypot(gx - px, gy - py) < mem.size + 15) {
+          audio.playTwinkle();
+          openMemoryModal(i);
+          return;
+        }
+      }
+
+      // Check Hidden Notes
+      for (const hn of CONFIG.hiddenNotes) {
+        if (Math.hypot(gx - hn.xr * 700, gy - hn.yr * 500) < 18) {
+          audio.playTwinkle();
+          openHiddenNote(hn.msg);
+          return;
+        }
+      }
+
+      // Check Heart Constellation
+      if (Math.hypot(gx - heartCenter.x, gy - heartCenter.y) < 70) {
+        openSurpriseModal();
+      }
+    }
+
+    // Modal Control Functions
+    let currentMemIndex = 0;
+    function openMemoryModal(idx) {
+      currentMemIndex = idx;
+      const mem = CONFIG.memories[idx];
+      visitedMemories.add(mem.id);
+      document.getElementById('memCounter').textContent = `${visitedMemories.size}/${CONFIG.memories.length}`;
+
+      document.getElementById('modalCategory').textContent = mem.category;
+      document.getElementById('modalDate').textContent = mem.date;
+      document.getElementById('modalTitle').textContent = mem.title;
+      document.getElementById('modalDesc').textContent = `"${mem.desc}"`;
+      document.getElementById('modalCaption').textContent = mem.caption;
+      document.getElementById('modalIndex').textContent = `${idx + 1} / ${CONFIG.memories.length}`;
+      document.getElementById('modalPlanetDot').style.backgroundColor = mem.color;
+
+      // Check for custom photo in localStorage
+      const customImg = localStorage.getItem('photo_' + mem.id);
+      const photoEl = document.getElementById('modalPhoto');
+      const fallbackEl = document.getElementById('modalPhotoFallback');
+
+      if (customImg) {
+        photoEl.src = customImg;
+        photoEl.style.display = 'block';
+        fallbackEl.style.display = 'none';
+      } else {
+        photoEl.style.display = 'none';
+        fallbackEl.style.display = 'block';
+        document.getElementById('modalFallbackTitle').textContent = mem.title;
+      }
+
+      document.getElementById('memoryModal').classList.add('active');
+    }
+
+    document.getElementById('btnPrevMemory').addEventListener('click', () => {
+      audio.playTwinkle();
+      openMemoryModal((currentMemIndex - 1 + CONFIG.memories.length) % CONFIG.memories.length);
+    });
+    document.getElementById('btnNextMemory').addEventListener('click', () => {
+      audio.playTwinkle();
+      openMemoryModal((currentMemIndex + 1) % CONFIG.memories.length);
+    });
+    document.getElementById('closeMemoryModal').addEventListener('click', () => {
+      document.getElementById('memoryModal').classList.remove('active');
+    });
+
+    // Custom Photo Upload on Modal
+    document.getElementById('btnUploadModalPhoto').addEventListener('click', () => {
+      document.getElementById('modalFileInput').click();
+    });
+    document.getElementById('modalFileInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const dataUrl = evt.target.result;
+        const mem = CONFIG.memories[currentMemIndex];
+        localStorage.setItem('photo_' + mem.id, dataUrl);
+        const photoEl = document.getElementById('modalPhoto');
+        photoEl.src = dataUrl;
+        photoEl.style.display = 'block';
+        document.getElementById('modalPhotoFallback').style.display = 'none';
+        audio.playTwinkle();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Moon Modal
+    function openMoonModal() {
+      document.getElementById('moonModal').classList.add('active');
+    }
+    document.getElementById('closeMoonModal').addEventListener('click', () => {
+      document.getElementById('moonModal').classList.remove('active');
+    });
+    document.getElementById('navMoonLetter').addEventListener('click', openMoonModal);
+
+    // Hidden Note Modal
+    function openHiddenNote(msg) {
+      document.getElementById('hiddenNoteText').textContent = `"${msg}"`;
+      document.getElementById('hiddenNoteModal').classList.add('active');
+    }
+    document.getElementById('closeHiddenNoteModal').addEventListener('click', () => {
+      document.getElementById('hiddenNoteModal').classList.remove('active');
+    });
+
+    // Final Surprise Modal
+    function openSurpriseModal() {
+      audio.playTwinkle();
+      document.getElementById('surpriseModal').classList.add('active');
+      setTimeout(() => {
+        document.getElementById('surprisePart2').style.opacity = '1';
+      }, 1500);
+    }
+    document.getElementById('navConstellation').addEventListener('click', openSurpriseModal);
+    document.getElementById('btnStayInUniverse').addEventListener('click', () => {
+      document.getElementById('surpriseModal').classList.remove('active');
+      isConstellationGlowing = true;
+    });
+
+    // Top Bar Audio Toggle
+    document.getElementById('btnAudioToggle').addEventListener('click', () => {
+      const active = audio.toggleMute();
+      const btn = document.getElementById('btnAudioToggle');
+      const lbl = document.getElementById('audioLabel');
+      if (active) {
+        btn.classList.add('active');
+        lbl.textContent = 'Music On';
+      } else {
+        btn.classList.remove('active');
+        lbl.textContent = 'Muted';
+      }
+    });
+
+    // Viewport Zoom Buttons
+    document.getElementById('btnZoomIn').addEventListener('click', () => cam.tz = Math.min(cam.tz * 1.3, 2.8));
+    document.getElementById('btnZoomOut').addEventListener('click', () => cam.tz = Math.max(cam.tz * 0.77, 0.45));
+    document.getElementById('btnCenterCam').addEventListener('click', () => { cam.tx = 0; cam.ty = 0; cam.tz = 1; });
+
+    // Memories button in Nav
+    document.getElementById('navCustomPhotos').addEventListener('click', () => {
+      openMemoryModal(0);
+    });
+
+    // Close modals on Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "Our Universe 🌌❤️ | Bitopan & Nisumii",
+  "description": "A magical, cinematic interactive romantic galaxy built for Nisumii by Bitopan — explore stars, planets, memories, love letters, and celestial wonders.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
+
